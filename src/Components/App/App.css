@@ -1,5 +1,6 @@
 .app {
   background-image: url("../../images/papyrus.png");
+  min-height: 100vh;
 }
 
 .App-logo {
