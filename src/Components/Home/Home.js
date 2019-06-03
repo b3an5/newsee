@@ -6,8 +6,8 @@ import "./Home.scss";
 export default function Home() {
   return (
     <main>
-      <header>
-        <h1 className="title">Newsee</h1>
+      <header className="header">
+        <h1 className="title">NewSee</h1>
         <h4 className="description">Go Ahead use AdBlock, we dont care.</h4>
       </header>
       <ArticleContainer />

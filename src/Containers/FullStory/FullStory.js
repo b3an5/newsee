@@ -12,6 +12,7 @@ class FullStory extends Component {
 
   componentDidMount = () => {
     if (
+      localStorage.article &&
       this.props.match.params.id.includes(
         JSON.parse(localStorage.article).publishedAt
       )
@@ -28,24 +29,34 @@ class FullStory extends Component {
       urlToImage,
       author,
       url,
-      publishedAt
+      publishedAt,
+      source
     } = this.props.currentStory;
     const fetchUrl = `https://api.diffbot.com/v3/article?token=27b09f6cb2a8e2ba60bf2717c2e9326f&url=${articleUrl}`;
     const response = await fetch(fetchUrl);
     const result = await response.json();
-    if (!result.objects[0].text) {
-      return alert("sorry");
-    }
+    console.log(response);
+
     const currentArticle = {
       title,
       url,
       author,
-      content: result.objects[0].text,
+      content: result.objects[0].html,
       urlToImage,
-      publishedAt
+      publishedAt,
+      source
     };
     localStorage.setItem("article", JSON.stringify(currentArticle));
     this.setState({ article: currentArticle });
+  };
+
+  favoriteArticle = () => {
+    let favArr = [];
+    if (localStorage.favorites) {
+      favArr = JSON.parse(localStorage.favorites);
+    }
+    favArr.push(this.state.article);
+    localStorage.setItem("favorites", JSON.stringify(favArr));
   };
 
   render() {
@@ -54,12 +65,13 @@ class FullStory extends Component {
     if (this.state.article.title) {
       return (
         <main className="full-article">
-          <button>Favorite</button>
-          <img src={urlToImage} alt={title} />
+          <button onClick={() => this.favoriteArticle()}>Favorite</button>
+          {/* <img src={urlToImage} alt={title} />
           <h1>{title}</h1>
-          <h4>Author: {author}</h4>
-          <p>{content}</p>
-          <a href={url}>read the original article here</a>
+          <h4>Author: {author}</h4> */}
+          {/* <p>{content}</p> */}
+          <div dangerouslySetInnerHTML={{ __html: content }} />
+          {/* <a href={url}>read the original article here</a> */}
         </main>
       );
     } else {

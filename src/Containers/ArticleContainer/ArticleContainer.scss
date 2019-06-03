@@ -1,11 +1,21 @@
 .article-container {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  // background-color: aqua;
+  justify-content: center;
   background-image: url("../../images/papyrus.png");
 }
 
 .search-form {
-  width: 100vw;
+  margin-left: 20px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  height: 15px;
+}
+
+.fav-button {
+  position: absolute;
+  right: 20px;
 }

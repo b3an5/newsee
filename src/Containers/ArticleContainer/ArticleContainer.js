@@ -12,13 +12,13 @@ class ArticleContainer extends Component {
     super();
     this.state = {
       search: "",
-      searched: false
+      searched: false,
+      favorites: false
     };
   }
 
   componentDidMount = async () => {
     if (this.props.topStories.length < 1) {
-      console.log("hi");
       const topStories = await topHeadlineData();
       this.props.saveTopStories(topStories);
     }
@@ -28,39 +28,58 @@ class ArticleContainer extends Component {
     e.preventDefault();
     this.setState({ searched: true });
     const searchStories = await searchData(this.state.search);
+    console.log("hi", searchStories);
     this.props.saveSearchStories(searchStories);
+  };
+
+  renderArticleCard = contents => {
+    return contents.map(content => {
+      return <ArticleCard storyInfo={content} />;
+    });
   };
 
   renderCards = () => {
     const { topStories, searchStories } = this.props;
     let articleCards;
     if (!this.state.searched) {
-      articleCards = topStories.map(story => {
-        return <ArticleCard storyInfo={story} />;
-      });
+      articleCards = this.renderArticleCard(topStories);
     } else {
-      articleCards = searchStories.map(story => {
-        return <ArticleCard storyInfo={story} />;
-      });
+      if (searchStories.length < 1) {
+        articleCards = <h1>search didn't match any stories</h1>;
+      } else {
+        articleCards = this.renderArticleCard(searchStories);
+      }
     }
     if (articleCards.length < 1) {
       articleCards = <h1>...loading</h1>;
+    }
+    if (this.state.favorites) {
+      const favorites = JSON.parse(localStorage.favorites);
+      articleCards = this.renderArticleCard(favorites);
     }
     return articleCards;
   };
 
   render() {
     return (
-      <div className="article-container">
-        <form onSubmit={this.searchArticles} className="search-form">
-          <input
-            onChange={e => {
-              this.setState({ search: e.target.value });
-            }}
-          />
-          <button>enter</button>
-        </form>
-        {this.renderCards()}
+      <div>
+        <div className="controls">
+          <form onSubmit={this.searchArticles} className="search-form">
+            <input
+              onChange={e => {
+                this.setState({ search: e.target.value });
+              }}
+            />
+            <button>enter</button>
+          </form>
+          <button
+            onClick={() => this.setState({ favorites: !this.state.favorites })}
+            className="fav-button"
+          >
+            favorites
+          </button>
+        </div>
+        <div className="article-container">{this.renderCards()}</div>
       </div>
     );
   }
