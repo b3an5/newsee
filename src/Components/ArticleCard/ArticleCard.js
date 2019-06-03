@@ -16,6 +16,7 @@ function ArticleCard(props) {
           onClick={() => {
             props.saveCurrentStory(props.storyInfo);
           }}
+          className="read-more"
         >
           Read Full Article
         </button>

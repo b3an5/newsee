@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main>
       <header>
-        <h1>Newsy</h1>
+        <h1 className="title">Newsee</h1>
       </header>
       <ArticleContainer />
     </main>

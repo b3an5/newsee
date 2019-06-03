@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import "./FullStory.scss";
 
 class FullStory extends Component {
   constructor() {
@@ -10,8 +11,6 @@ class FullStory extends Component {
   }
 
   componentDidMount = () => {
-    console.log(JSON.parse(localStorage.article).publishedAt);
-    console.log(this.props.match.params.id);
     if (
       this.props.match.params.id.includes(
         JSON.parse(localStorage.article).publishedAt
@@ -52,24 +51,24 @@ class FullStory extends Component {
   render() {
     const { title, urlToImage, content, author, url } = this.state.article;
 
-    if (this.state.articleHtml !== null) {
+    if (this.state.article.title) {
       return (
-        <main>
+        <main className="full-article">
+          <button>Favorite</button>
           <img src={urlToImage} alt={title} />
           <h1>{title}</h1>
-          <h2>{author}</h2>
+          <h4>Author: {author}</h4>
           <p>{content}</p>
           <a href={url}>read the original article here</a>
         </main>
       );
     } else {
       return (
-        <main>
-          <img src={urlToImage} alt={title} />
-          <h1>{title}</h1>
-          <h2>{author}</h2>
-          <p>...loading</p>
-          <a href={url}>read the original article here</a>
+        <main className="full-story-loading">
+          <img
+            src="https://cdn.dribbble.com/users/5661/screenshots/2491233/loading-gif-800x600.gif"
+            alt="loading gif"
+          />
         </main>
       );
     }

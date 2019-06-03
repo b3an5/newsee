@@ -1,0 +1,15 @@
+.full-article {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 80vw;
+  align-items: center;
+  margin: 10px auto;
+  border: 3px solid black;
+  padding: 15px;
+  background-color: linen;
+}
+
+.full-story-loading {
+  text-align: center;
+}

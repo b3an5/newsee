@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { saveTopStories } from "../../actions/index";
 import { saveSearchStories } from "../../actions/index";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
+import "./ArticleContainer.scss";
 
 class ArticleContainer extends Component {
   constructor() {
@@ -50,8 +51,8 @@ class ArticleContainer extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.searchArticles}>
+      <div className="article-container">
+        <form onSubmit={this.searchArticles} className="search-form">
           <input
             onChange={e => {
               this.setState({ search: e.target.value });
