@@ -4,10 +4,10 @@ import { searchData } from "../../utilities/searchCall";
 import { connect } from "react-redux";
 import { saveTopStories } from "../../actions/index";
 import { saveSearchStories } from "../../actions/index";
-import ArticleCard from "../../Components/ArticleCard/ArticleCard";
+import ArticleCard from "../ArticleCard/ArticleCard";
 import "./ArticleContainer.scss";
 
-class ArticleContainer extends Component {
+export class ArticleContainer extends Component {
   constructor() {
     super();
     this.state = {
@@ -32,14 +32,18 @@ class ArticleContainer extends Component {
 
   searchArticles = async e => {
     e.preventDefault();
-    this.setState({ searched: true });
-    let searchStories = null;
-    try {
-      searchStories = await searchData(this.state.search);
-    } catch (e) {
-      this.setState({ errored: true });
+    if (this.state.search === "") {
+      this.setState({ searched: false });
+    } else {
+      this.setState({ searched: true });
+      let searchStories = null;
+      try {
+        searchStories = await searchData(this.state.search);
+      } catch (e) {
+        this.setState({ errored: true });
+      }
+      this.props.saveSearchStories(searchStories);
     }
-    this.props.saveSearchStories(searchStories);
   };
 
   renderArticleCard = contents => {
