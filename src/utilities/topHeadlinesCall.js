@@ -5,6 +5,5 @@ export const topHeadlineData = async () => {
     "apiKey=206492147a2649c9b1ac498dcd498198";
   const response = await fetch(url);
   const result = await response.json();
-  console.log(result.articles);
   return result.articles;
 };

@@ -13,13 +13,19 @@ class ArticleContainer extends Component {
     this.state = {
       search: "",
       searched: false,
-      favorites: false
+      favorites: false,
+      errored: false
     };
   }
 
   componentDidMount = async () => {
     if (this.props.topStories.length < 1) {
-      const topStories = await topHeadlineData();
+      let topStories = null;
+      try {
+        topStories = await topHeadlineData();
+      } catch (e) {
+        this.setState({ errored: true });
+      }
       this.props.saveTopStories(topStories);
     }
   };
@@ -27,35 +33,43 @@ class ArticleContainer extends Component {
   searchArticles = async e => {
     e.preventDefault();
     this.setState({ searched: true });
-    const searchStories = await searchData(this.state.search);
-    console.log("hi", searchStories);
+    let searchStories = null;
+    try {
+      searchStories = await searchData(this.state.search);
+    } catch (e) {
+      this.setState({ errored: true });
+    }
     this.props.saveSearchStories(searchStories);
   };
 
   renderArticleCard = contents => {
     return contents.map(content => {
-      return <ArticleCard storyInfo={content} />;
+      return <ArticleCard storyInfo={content} key={content.title} />;
     });
   };
 
   renderCards = () => {
     const { topStories, searchStories } = this.props;
     let articleCards;
-    if (!this.state.searched) {
-      articleCards = this.renderArticleCard(topStories);
+    if (this.state.errored) {
+      articleCards = <h1>sorry server-side error try to refresh</h1>;
     } else {
-      if (searchStories.length < 1) {
-        articleCards = <h1>search didn't match any stories</h1>;
+      if (!this.state.searched) {
+        articleCards = this.renderArticleCard(topStories);
       } else {
-        articleCards = this.renderArticleCard(searchStories);
+        if (searchStories.length < 1) {
+          articleCards = <h1>search didn't match any stories</h1>;
+        } else {
+          articleCards = this.renderArticleCard(searchStories);
+        }
       }
-    }
-    if (articleCards.length < 1) {
-      articleCards = <h1>...loading</h1>;
-    }
-    if (this.state.favorites) {
-      const favorites = JSON.parse(localStorage.favorites);
-      articleCards = this.renderArticleCard(favorites);
+      if (articleCards.length < 1) {
+        articleCards = <h1>...loading</h1>;
+      }
+      if (this.state.favorites) {
+        const favorites = JSON.parse(localStorage.favorites);
+        articleCards = this.renderArticleCard(favorites);
+      }
     }
     return articleCards;
   };
