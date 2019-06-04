@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { saveCurrentStory } from "../../actions/index";
 
-function ArticleCard(props) {
+export function ArticleCard(props) {
   let { title, urlToImage, description, publishedAt, source } = props.storyInfo;
   return (
     <article>
