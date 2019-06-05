@@ -1,3 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ArticleContainer articleContainer component should match snapshot 1`] = `ShallowWrapper {}`;
+exports[`ArticleContainer articleContainer component should call component did mount and match snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`ArticleContainer articleContainer component should match default snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`ArticleContainer articleContainer component should match snapshot when favorites is clicked 1`] = `ShallowWrapper {}`;
+
+exports[`ArticleContainer articleContainer component should match snapshot when loading 1`] = `ShallowWrapper {}`;
+
+exports[`ArticleContainer articleContainer component should match snapshot when searched 1`] = `ShallowWrapper {}`;
+
+exports[`ArticleContainer articleContainer component should match snapshot when searched retrieves nothing 1`] = `ShallowWrapper {}`;

@@ -32,7 +32,37 @@ describe("ArticleContainer", () => {
       );
     });
 
-    it("should match snapshot", () => {
+    it("should match default snapshot", () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it("should match snapshot when loading", () => {
+      wrapper = shallow(
+        <ArticleContainer topStories={[]} searchStories={mockSearchStories} />
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it("should match snapshot when searched", () => {
+      wrapper
+        .find(".search-input")
+        .simulate("change", { target: { value: "blah" } });
+      wrapper.find(".search-form").simulate("submit", {
+        preventDefault: () => {}
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it("should match snapshot when searched retrieves nothing", () => {
+      wrapper = shallow(
+        <ArticleContainer topStories={mockTopStories} searchStories={[]} />
+      );
+      wrapper
+        .find(".search-input")
+        .simulate("change", { target: { value: "blah" } });
+      wrapper.find(".search-form").simulate("submit", {
+        preventDefault: () => {}
+      });
       expect(wrapper).toMatchSnapshot();
     });
 
@@ -60,6 +90,18 @@ describe("ArticleContainer", () => {
         favorites: true,
         errored: false
       });
+    });
+
+    it("should match snapshot when favorites is clicked", () => {
+      expect(wrapper.state()).toEqual({
+        search: "",
+        searched: false,
+        favorites: false,
+        errored: false
+      });
+      localStorage.favorites = JSON.stringify(mockTopStories);
+      wrapper.find(".fav-button").simulate("click");
+      expect(wrapper).toMatchSnapshot();
     });
 
     it("should change the state of search when its typed into", () => {
@@ -95,26 +137,49 @@ describe("ArticleContainer", () => {
       });
     });
 
-    // it.skip("should call searchData with the correct paramaters", () => {
-    //   // const spy = jest.spyOn(wrapper.instance(), "searchData");
-    //   wrapper
-    //     .find(".search-input")
-    //     .simulate("change", { target: { value: "blah" } });
-    //   wrapper.find(".search-form").simulate("submit", {
-    //     preventDefault: () => {}
-    //   });
+    it("should call searchData with the correct paramaters", () => {
+      wrapper
+        .find(".search-input")
+        .simulate("change", { target: { value: "blah" } });
+      wrapper.find(".search-form").simulate("submit", {
+        preventDefault: () => {}
+      });
 
-    //   expect(window.fetch).toHaveBeenCalled(
-    //     "https://newsapi.org/v2/everything?" +
-    //       "q=" +
-    //       "blah" +
-    //       "&" +
-    //       "language=en&" +
-    //       "sortBy=relevancy&" +
-    //       "apiKey=" +
-    //       apiKey
-    //   );
-    // });
+      expect(window.fetch).toHaveBeenCalledWith(
+        "https://newsapi.org/v2/everything?" +
+          "q=" +
+          "blah" +
+          "&" +
+          "language=en&" +
+          "sortBy=relevancy&" +
+          "apiKey=" +
+          apiKey
+      );
+    });
+
+    it("should call component did mount and match snapshot", () => {
+      wrapper.instance().componentDidMount();
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it("should call renderArticleCard with search stories", () => {
+      const spy = jest.spyOn(wrapper.instance(), "renderArticleCard");
+      wrapper
+        .find(".search-input")
+        .simulate("change", { target: { value: "blah" } });
+      wrapper.find(".search-form").simulate("submit", {
+        preventDefault: () => {}
+      });
+
+      expect(spy).toBeCalled();
+    });
+
+    it("should call renderArticleCard with top stories", () => {
+      const spy = jest.spyOn(wrapper.instance(), "renderArticleCard");
+      wrapper.instance().renderCards();
+
+      expect(spy).toBeCalled();
+    });
   });
 
   describe("mapDispatchToProps", () => {
