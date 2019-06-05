@@ -10,6 +10,7 @@ import React from "react";
 
 describe("fullStory", () => {
   let wrapper;
+  const favoriteArticle = jest.fn();
 
   beforeEach(() => {
     wrapper = shallow(<FullStory currentStory={mockCurrentStory} />);
@@ -26,11 +27,11 @@ describe("fullStory", () => {
     });
 
     it("should call favorite article when button is pressed", () => {
-      wrapper.state({ article: mockCurrentStory });
-      expect(wrapper.state()).toEqual({
-        article: {}
-      });
-      // wrapper.find(".fav-butt").simulate("click");
+      wrapper.setState({ article: mockCurrentStory });
+      wrapper.find(".fav-butt").simulate("click");
+      expect(localStorage.favorites).toEqual(
+        JSON.stringify([mockCurrentStory])
+      );
     });
   });
 

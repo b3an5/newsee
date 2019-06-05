@@ -72,6 +72,22 @@ describe("ArticleContainer", () => {
         errored: false
       });
     });
+
+    it("should search when searchform is submitted", () => {
+      const searchData = jest.fn();
+      wrapper
+        .find(".search-input")
+        .simulate("change", { target: { value: "blah" } });
+      wrapper.find(".search-form").simulate("submit", {
+        preventDefault: () => {}
+      });
+      expect(wrapper.state()).toEqual({
+        search: "blah",
+        searched: true,
+        favorites: false,
+        errored: false
+      });
+    });
   });
 
   describe("mapDispatchToProps", () => {

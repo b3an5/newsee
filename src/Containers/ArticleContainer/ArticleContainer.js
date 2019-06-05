@@ -32,6 +32,7 @@ export class ArticleContainer extends Component {
 
   searchArticles = async e => {
     e.preventDefault();
+    this.setState({ favorites: false });
     if (this.state.search === "") {
       this.setState({ searched: false });
     } else {
