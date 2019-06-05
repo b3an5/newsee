@@ -25,26 +25,13 @@ export class FullStory extends Component {
   }
 
   grabArticleContent = async articleUrl => {
-    const {
-      title,
-      urlToImage,
-      author,
-      url,
-      publishedAt,
-      source,
-    } = this.props.currentStory
     const fetchUrl = `https://api.diffbot.com/v3/article?token=27b09f6cb2a8e2ba60bf2717c2e9326f&url=${articleUrl}`
     const response = await fetch(fetchUrl)
     const result = await response.json()
 
     const currentArticle = {
-      title,
-      url,
-      author,
+      ...this.props.currentStory,
       content: result.objects[0].html,
-      urlToImage,
-      publishedAt,
-      source,
     }
     localStorage.setItem('article', JSON.stringify(currentArticle))
     this.setState({ article: currentArticle })
@@ -92,5 +79,5 @@ export default connect(mapStateToProps)(FullStory)
 
 FullStory.propTypes = {
   currentStory: PropTypes.object,
-  match: PropTypes.func,
+  match: PropTypes.object,
 }
