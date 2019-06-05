@@ -1,6 +1,6 @@
 # ~~newsy~~ NewSee
 
-This project is a news website designed rid you of the hassel of turning off adblockers and getting news from a diverse set of sources. using the [news api](https://newsapi.org/) and a [webscraper](https://www.diffbot.com/) you get the full news articles without those intrusive pop ups asking you to turn off adBlocker or subscribe to a news letter. You can also favorite articles and search for the news you care about. Learning goals were practice redux implemntation and testing while working with a restful api.
+This project is a news website designed rid you of the hassel of turning off adblockers and getting news from a diverse set of sources. using the [news api](https://newsapi.org/) and a [webscraper](https://www.diffbot.com/) you get the full news articles without those intrusive pop ups asking you to turn off adBlocker or subscribe to a news letter. You can also favorite articles and search for the news you care about. Learning goals were practice redux implementation and testing while working with a restful api.
 
 ## To run:
 
