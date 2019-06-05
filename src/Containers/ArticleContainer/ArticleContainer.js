@@ -71,7 +71,7 @@ export class ArticleContainer extends Component {
         articleCards = <h1>...loading</h1>;
       }
       if (this.state.favorites) {
-        const favorites = JSON.parse(localStorage.favorites);
+        const favorites = JSON.parse(localStorage.getItem("favorites"));
         articleCards = this.renderArticleCard(favorites);
       }
     }
@@ -84,6 +84,7 @@ export class ArticleContainer extends Component {
         <div className="controls">
           <form onSubmit={this.searchArticles} className="search-form">
             <input
+              className="search-input"
               onChange={e => {
                 this.setState({ search: e.target.value });
               }}

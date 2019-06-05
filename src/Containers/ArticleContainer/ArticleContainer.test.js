@@ -37,6 +37,41 @@ describe("ArticleContainer", () => {
         errored: false
       });
     });
+
+    it("should change the state of favorites when favorite button is pressed", () => {
+      expect(wrapper.state()).toEqual({
+        search: "",
+        searched: false,
+        favorites: false,
+        errored: false
+      });
+      localStorage.favorites = JSON.stringify(mockTopStories);
+      wrapper.find(".fav-button").simulate("click");
+      expect(wrapper.state()).toEqual({
+        search: "",
+        searched: false,
+        favorites: true,
+        errored: false
+      });
+    });
+
+    it("should change the state of search when its typed into", () => {
+      expect(wrapper.state()).toEqual({
+        search: "",
+        searched: false,
+        favorites: false,
+        errored: false
+      });
+      wrapper
+        .find(".search-input")
+        .simulate("change", { target: { value: "blah" } });
+      expect(wrapper.state()).toEqual({
+        search: "blah",
+        searched: false,
+        favorites: false,
+        errored: false
+      });
+    });
   });
 
   describe("mapDispatchToProps", () => {

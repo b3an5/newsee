@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./FullStory.scss";
 
-class FullStory extends Component {
+export class FullStory extends Component {
   constructor() {
     super();
     this.state = {
@@ -35,7 +35,6 @@ class FullStory extends Component {
     const fetchUrl = `https://api.diffbot.com/v3/article?token=27b09f6cb2a8e2ba60bf2717c2e9326f&url=${articleUrl}`;
     const response = await fetch(fetchUrl);
     const result = await response.json();
-    console.log(response);
 
     const currentArticle = {
       title,
@@ -60,18 +59,15 @@ class FullStory extends Component {
   };
 
   render() {
-    const { title, urlToImage, content, author, url } = this.state.article;
+    const { content } = this.state.article;
 
     if (this.state.article.title) {
       return (
         <main className="full-article">
-          <button onClick={() => this.favoriteArticle()}>Favorite</button>
-          {/* <img src={urlToImage} alt={title} />
-          <h1>{title}</h1>
-          <h4>Author: {author}</h4> */}
-          {/* <p>{content}</p> */}
+          <button onClick={() => this.favoriteArticle()} className="fav-butt">
+            Favorite
+          </button>
           <div dangerouslySetInnerHTML={{ __html: content }} />
-          {/* <a href={url}>read the original article here</a> */}
         </main>
       );
     } else {
