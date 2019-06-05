@@ -37,4 +37,5 @@ export default connect(
 
 ArticleCard.propTypes = {
   saveCurrentStory: PropTypes.func,
+  storyInfo: PropTypes.object,
 }

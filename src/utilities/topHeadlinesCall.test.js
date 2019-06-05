@@ -5,8 +5,10 @@ describe('top headline call', () => {
   const mockUrl = 'https://newsapi.org/v2/top-headlines?'
   const mockResult = { articles: mockTopStories }
   window.fetch = jest.fn().mockImplementation(() =>
+    // eslint-disable-next-line no-undef
     Promise.resolve({
       ok: true,
+      // eslint-disable-next-line no-undef
       json: () => Promise.resolve(mockResult),
     })
   )

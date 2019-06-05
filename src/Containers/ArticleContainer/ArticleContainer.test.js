@@ -25,8 +25,10 @@ describe('ArticleContainer', () => {
         />
       )
       window.fetch = jest.fn().mockImplementation(() =>
+        // eslint-disable-next-line no-undef
         Promise.resolve({
           ok: true,
+          // eslint-disable-next-line no-undef
           json: () => Promise.resolve(mockSearchStories),
         })
       )
