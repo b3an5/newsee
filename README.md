@@ -8,7 +8,7 @@ This project is a news website designed rid you of the hassel of turning off adb
 * Run `npm install` to download necessary packages 
 * Apply for an api key [here](https://newsapi.org/register) 
 * Create an api key file at this path /src/utilities/apiKey.js
-* Set export const apiKey to your api key 
+* Set `export const apiKey` to your api key 
 * and run `npm start`
 
 ### Authors
