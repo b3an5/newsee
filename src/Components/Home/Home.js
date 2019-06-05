@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 // import { Link } from "react-router-dom";
-import ArticleContainer from "../../Containers/ArticleContainer/ArticleContainer";
-import "./Home.scss";
+import ArticleContainer from '../../Containers/ArticleContainer/ArticleContainer'
+import './Home.scss'
 
 export default function Home() {
   return (
@@ -12,5 +12,5 @@ export default function Home() {
       </header>
       <ArticleContainer />
     </main>
-  );
+  )
 }

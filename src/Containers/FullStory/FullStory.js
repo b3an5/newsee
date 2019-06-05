@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import "./FullStory.scss";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import './FullStory.scss'
+import PropTypes from 'prop-types'
 
 export class FullStory extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      article: {}
-    };
+      article: {},
+    }
   }
 
   componentDidMount = () => {
@@ -17,11 +18,11 @@ export class FullStory extends Component {
         JSON.parse(localStorage.article).publishedAt
       )
     ) {
-      this.setState({ article: JSON.parse(localStorage.article) });
+      this.setState({ article: JSON.parse(localStorage.article) })
     } else {
-      this.grabArticleContent(this.props.currentStory.url);
+      this.grabArticleContent(this.props.currentStory.url)
     }
-  };
+  }
 
   grabArticleContent = async articleUrl => {
     const {
@@ -30,11 +31,11 @@ export class FullStory extends Component {
       author,
       url,
       publishedAt,
-      source
-    } = this.props.currentStory;
-    const fetchUrl = `https://api.diffbot.com/v3/article?token=27b09f6cb2a8e2ba60bf2717c2e9326f&url=${articleUrl}`;
-    const response = await fetch(fetchUrl);
-    const result = await response.json();
+      source,
+    } = this.props.currentStory
+    const fetchUrl = `https://api.diffbot.com/v3/article?token=27b09f6cb2a8e2ba60bf2717c2e9326f&url=${articleUrl}`
+    const response = await fetch(fetchUrl)
+    const result = await response.json()
 
     const currentArticle = {
       title,
@@ -43,23 +44,23 @@ export class FullStory extends Component {
       content: result.objects[0].html,
       urlToImage,
       publishedAt,
-      source
-    };
-    localStorage.setItem("article", JSON.stringify(currentArticle));
-    this.setState({ article: currentArticle });
-  };
+      source,
+    }
+    localStorage.setItem('article', JSON.stringify(currentArticle))
+    this.setState({ article: currentArticle })
+  }
 
   favoriteArticle = () => {
-    let favArr = [];
+    let favArr = []
     if (localStorage.favorites) {
-      favArr = JSON.parse(localStorage.favorites);
+      favArr = JSON.parse(localStorage.favorites)
     }
-    favArr.push(this.state.article);
-    localStorage.setItem("favorites", JSON.stringify(favArr));
-  };
+    favArr.push(this.state.article)
+    localStorage.setItem('favorites', JSON.stringify(favArr))
+  }
 
   render() {
-    const { content } = this.state.article;
+    const { content } = this.state.article
 
     if (this.state.article.title) {
       return (
@@ -69,7 +70,7 @@ export class FullStory extends Component {
           </button>
           <div dangerouslySetInnerHTML={{ __html: content }} />
         </main>
-      );
+      )
     } else {
       return (
         <main className="full-story-loading">
@@ -78,13 +79,18 @@ export class FullStory extends Component {
             alt="loading gif"
           />
         </main>
-      );
+      )
     }
   }
 }
 
 export const mapStateToProps = state => ({
-  currentStory: state.currentStory
-});
+  currentStory: state.currentStory,
+})
 
-export default connect(mapStateToProps)(FullStory);
+export default connect(mapStateToProps)(FullStory)
+
+FullStory.propTypes = {
+  currentStory: PropTypes.object,
+  match: PropTypes.func,
+}

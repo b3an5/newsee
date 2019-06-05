@@ -1,8 +1,8 @@
-import React from "react";
-import { Switch, Route, withRouter } from "react-router-dom";
-import Home from "../Home/Home";
-import FullStory from "../../Containers/FullStory/FullStory";
-import "./App.css";
+import React from 'react'
+import { Switch, Route, withRouter } from 'react-router-dom'
+import Home from '../Home/Home'
+import FullStory from '../../Containers/FullStory/FullStory'
+import './App.css'
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Route exact path="/article/:id" component={FullStory} />
       </Switch>
     </div>
-  );
+  )
 }
 
-export default withRouter(App);
+export default withRouter(App)

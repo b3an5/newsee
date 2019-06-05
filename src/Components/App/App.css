@@ -1,9 +1,9 @@
 * {
-  font-family: "News Cycle", sans-serif;
+  font-family: 'News Cycle', sans-serif;
 }
 
 .app {
-  background-image: url("../../images/papyrus.png");
+  background-image: url('../../images/papyrus.png');
   min-height: 100vh;
 }
 
