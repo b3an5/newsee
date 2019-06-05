@@ -26,12 +26,32 @@ export class FullStory extends Component {
 
   grabArticleContent = async articleUrl => {
     const fetchUrl = `https://api.diffbot.com/v3/article?token=27b09f6cb2a8e2ba60bf2717c2e9326f&url=${articleUrl}`
-    const response = await fetch(fetchUrl)
-    const result = await response.json()
+    let response
+    try {
+      response = await fetch(fetchUrl)
+    } catch (e) {
+      this.setState({
+        article: {
+          ...this.props.currentStory,
+          content:
+            'this website isnt working with the webscraper check back soon',
+        },
+      })
+    }
 
-    const currentArticle = {
-      ...this.props.currentStory,
-      content: result.objects[0].html,
+    const result = await response.json()
+    let currentArticle
+    if (result.objects) {
+      currentArticle = {
+        ...this.props.currentStory,
+        content: result.objects[0].html,
+      }
+    } else {
+      currentArticle = {
+        ...this.props.currentStory,
+        content:
+          'this website isnt working with the webscraper check back soon',
+      }
     }
     localStorage.setItem('article', JSON.stringify(currentArticle))
     this.setState({ article: currentArticle })
