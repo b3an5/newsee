@@ -4,7 +4,7 @@ This project is a news website designed rid you of the hassel of turning off adb
 
 ## To run:
 
-* Run `git clone https://github.com/b3an5/newsy` in your terminal to copy locally
+* Run `git clone https://github.com/b3an5/newsee` in your terminal to copy locally
 * Run `npm install` to download necessary packages 
 * Apply for an api key [here](https://newsapi.org/register) 
 * Create an api key file at this path /src/utilities/apiKey.js
