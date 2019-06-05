@@ -11,6 +11,7 @@ import {
   mockSearchStories
 } from "../../utilities/mockData";
 import React from "react";
+import { apiKey } from "../../utilities/apiKey";
 
 describe("ArticleContainer", () => {
   describe("articleContainer component", () => {
@@ -22,6 +23,12 @@ describe("ArticleContainer", () => {
           topStories={mockTopStories}
           searchStories={mockSearchStories}
         />
+      );
+      window.fetch = jest.fn().mockImplementation(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(mockSearchStories)
+        })
       );
     });
 
@@ -74,7 +81,6 @@ describe("ArticleContainer", () => {
     });
 
     it("should search when searchform is submitted", () => {
-      const searchData = jest.fn();
       wrapper
         .find(".search-input")
         .simulate("change", { target: { value: "blah" } });
@@ -88,6 +94,27 @@ describe("ArticleContainer", () => {
         errored: false
       });
     });
+
+    // it.skip("should call searchData with the correct paramaters", () => {
+    //   // const spy = jest.spyOn(wrapper.instance(), "searchData");
+    //   wrapper
+    //     .find(".search-input")
+    //     .simulate("change", { target: { value: "blah" } });
+    //   wrapper.find(".search-form").simulate("submit", {
+    //     preventDefault: () => {}
+    //   });
+
+    //   expect(window.fetch).toHaveBeenCalled(
+    //     "https://newsapi.org/v2/everything?" +
+    //       "q=" +
+    //       "blah" +
+    //       "&" +
+    //       "language=en&" +
+    //       "sortBy=relevancy&" +
+    //       "apiKey=" +
+    //       apiKey
+    //   );
+    // });
   });
 
   describe("mapDispatchToProps", () => {
