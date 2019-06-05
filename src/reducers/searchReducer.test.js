@@ -2,7 +2,7 @@ import * as actions from "../actions/index";
 import { SearchReducer } from "./searchReducer";
 import { mockSearchStories } from "../utilities/mockData";
 
-describe("sear reducer", () => {
+describe("search reducer", () => {
   it("should return init state", () => {
     const expected = [];
     const result = SearchReducer(undefined, []);
