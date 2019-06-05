@@ -10,7 +10,6 @@ import React from "react";
 
 describe("fullStory", () => {
   let wrapper;
-  const favoriteArticle = jest.fn();
 
   beforeEach(() => {
     wrapper = shallow(<FullStory currentStory={mockCurrentStory} />);
@@ -32,6 +31,11 @@ describe("fullStory", () => {
       expect(localStorage.favorites).toEqual(
         JSON.stringify([mockCurrentStory])
       );
+    });
+
+    it("should match loading snapshot", () => {
+      wrapper = shallow(<FullStory currentStory={{}} />);
+      expect(wrapper).toMatchSnapshot();
     });
   });
 
